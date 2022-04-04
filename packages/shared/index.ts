@@ -1,0 +1,2 @@
+// entry
+export default true;

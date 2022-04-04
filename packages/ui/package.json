@@ -15,7 +15,7 @@
     "tsconfig": "*",
     "typescript": "^4.6.3",
     "typescript-plugin-css-modules": "^3.4.0",
-    "web": "*"
+    "frontend": "*"
   },
   "dependencies": {
     "isomorphic-dompurify": "^0.18.0",
