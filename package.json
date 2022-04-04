@@ -1,0 +1,29 @@
+{
+  "name": "turborepo-basic-shared",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "prisma": {
+    "schema": "packages/shared/prisma/schema.prisma"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ps-shadow": "pscale connect issuetracker shadow --port 3309",
+    "ps-initial": "pscale connect issuetracker initial-setup --port 3310"
+  },
+  "devDependencies": {
+    "prettier": "^2.6.1",
+    "turbo": "1.1.10"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "yarn@1.22.18"
+}

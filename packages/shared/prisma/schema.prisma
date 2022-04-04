@@ -1,0 +1,81 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  email     String    @unique
+  username  String    @unique
+  image     String
+  salt      String    @unique
+  hash      String    @unique
+  prrojects Project[]
+  comment   Comment[]
+  issues    Issue[]
+  votes     Vote[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+  createdAt   DateTime @default(now())
+  name        String   @unique
+  email       String
+  slug        String   @unique
+  url         String
+  description String
+  issues      Issue[]
+
+  @@index([userId])
+}
+
+model Issue {
+  id          String    @id @default(cuid())
+  project     Project?  @relation(fields: [projectId], references: [id])
+  projectId   String?
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  title       String
+  description String
+  slug        String    @unique
+  state       String
+  votes       Int?
+  severity    String
+  comments    Comment[]
+
+  @@index([projectId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  issue     Issue?   @relation(fields: [issueId], references: [id])
+  issueId   String?
+  createdAt DateTime @default(now())
+  content   String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@index([issueId])
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  issueId   String?
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  createdAt DateTime @default(now())
+
+  @@index([userId, issueId])
+}
