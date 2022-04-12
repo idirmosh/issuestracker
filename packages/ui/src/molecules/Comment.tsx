@@ -19,7 +19,7 @@ type ExtendedComment = any;
 function Comment({ comment }: { comment: ExtendedComment }) {
   const { contextUser: user } = useContext(AuthContext) as any;
   const canEdit = user?.id === comment?.user?.id;
-  const [selectedComment, setSelectedComment] = useState("");
+  const [editMode, setEditMode] = useState(false);
   // const [deleteComment, { data, loading, error }] = useMutation(DELETE_COMMENT);
 
   const { handler } = useComments({
@@ -38,7 +38,8 @@ function Comment({ comment }: { comment: ExtendedComment }) {
   };
   const editCommentHandler = (id: string) => {
     commentRef.current.contentEditable = "true";
-
+    commentRef.current.focus();
+    setEditMode(true);
     //commentRef.current.style.color = "red";
     console.dir();
   };
@@ -68,7 +69,7 @@ function Comment({ comment }: { comment: ExtendedComment }) {
                 onClick={() => editCommentHandler(comment.id)}
                 className="text-xs font-medium text-blue-600 cursor-pointer"
               >
-                Edit
+                {editMode ? "Save" : "Edit"}
               </p>
               <p
                 className="ml-2 text-xs font-medium text-red-400 cursor-pointer"
