@@ -1,5 +1,4 @@
 import LoginForm from "ui/src/organisms/LoginForm";
-import Image from "next/image";
 import React from "react";
 //import LogoImage from "../../public/logo-icon.png";
 

@@ -1,5 +1,4 @@
 import SignUpForm from "ui/src/organisms/SignUpForm";
-import Image from "next/image";
 import React from "react";
 // import LogoImage from "../../public/logo-icon.png";
 

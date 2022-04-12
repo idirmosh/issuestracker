@@ -37,6 +37,7 @@ type Mutation {
   createComment(content: String!, issueId: String!): Comment!
   createIssue(description: String!, projectId: String!, projectSlug: String!, severity: String!, title: String!): Issue!
   createProject(description: String!, email: String!, name: String!, url: String!): Project!
+  deleteComment(commentId: String!): Comment!
   logOut: User!
   login(password: String!, username: String!): User!
   signUp(email: String!, password: String!, username: String!): User!
@@ -59,6 +60,7 @@ type Project {
 
 type Query {
   getAllProjects: [Project]!
+  getComments(issueId: String!): [Comment]!
   getDashboard: [Project]!
   getIssue(slug: String!): Issue!
   getMe: User!

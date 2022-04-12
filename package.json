@@ -1,6 +1,6 @@
 {
-  "name": "turborepo-basic-shared",
-  "version": "0.0.0",
+  "name": "issuetracker",
+  "version": "1.0.0",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -14,16 +14,17 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "ps-shadow": "pscale connect issuetracker shadow --port 3309",
-    "ps-initial": "pscale connect issuetracker initial-setup --port 3310"
+    "localdb": "concurrently \"pscale connect issuetracker shadow --port 3309\" \"pscale connect issuetracker initial-setup --port 3310\"",
+    "alldev": "concurrently \"yarn run localdb\" \"yarn run dev\""
   },
   "devDependencies": {
-    "prettier": "^2.6.1",
+    "concurrently": "^7.1.0",
+    "prettier": "^2.6.2",
     "turbo": "1.1.10"
   },
   "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
+    "npm": ">=8.5.0",
+    "node": ">=16.14.2"
   },
   "packageManager": "yarn@1.22.18"
 }

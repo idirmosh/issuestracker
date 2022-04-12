@@ -98,7 +98,8 @@ export function serializeToken(key: string, token: string): string | TypeError {
 
   const config: CookieSerializeOptions = {
     httpOnly: true,
-    maxAge: isAccess ? 60 * 15 : 60 * 60 * 24 * 7, // 15 min  or 7 days
+    // maxAge: isAccess ? 60 * 15 : 60 * 60 * 24 * 7, // 15 min  or 7 days
+    maxAge: 60 * 60 * 24 * 7,
     secure: true,
     path: "/",
     sameSite: "none",
@@ -116,7 +117,7 @@ export async function pathRevalidate(path) {
   try {
     const token = process.env.REVALIDATE_SECRET_TOKEN;
     const url = `${FRONTEND_URL}/api/revalidate?secret=${token}&path=${path}`;
-
+    console.log("PATH TO REVALIDATE : " + path);
     await fetch(url, { method: "POST" });
     return true;
   } catch (error) {

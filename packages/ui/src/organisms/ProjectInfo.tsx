@@ -1,6 +1,6 @@
-import Divider from "..//atoms/Divider";
-import ProjectInfoFooter from "..//molecules/ProjectInfoFooter";
-import ProjectInfoHeader from "..//molecules/ProjectInfoHeader";
+import Divider from "../atoms/Divider";
+import ProjectInfoFooter from "../molecules/ProjectInfoFooter";
+import ProjectInfoHeader from "../molecules/ProjectInfoHeader";
 import React from "react";
 
 function ProjectInfo() {

@@ -1,6 +1,8 @@
+import { pathRevalidate } from "shared/server/utils";
 import { AuthenticationError } from "apollo-server-micro";
 import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { User } from "./User";
+import prisma from "../../../db";
 
 export const Comment = objectType({
   name: "Comment",
@@ -42,6 +44,48 @@ export const createComment = extendType({
             },
           });
         }
+      },
+    });
+  },
+});
+export const deleteComment = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("deleteComment", {
+      type: Comment,
+      args: {
+        commentId: nonNull(stringArg()),
+      },
+      async resolve(parent, args, { db, userId }) {
+        await prisma.comment.delete({
+          where: {
+            id: args.commentId,
+          },
+        });
+
+        return Comment;
+      },
+    });
+  },
+});
+
+export const getComments = extendType({
+  type: "Query",
+  definition(t) {
+    t.nonNull.list.field("getComments", {
+      type: Comment,
+      args: {
+        issueId: nonNull(stringArg()),
+      },
+      async resolve(parent, args, { db, userId }) {
+        const commentsRef = await db.comment.findMany({
+          where: {
+            issueId: args.issueId,
+          },
+        });
+        // await pathRevalidate(`/${args.projectSlug}`);
+
+        return commentsRef;
       },
     });
   },

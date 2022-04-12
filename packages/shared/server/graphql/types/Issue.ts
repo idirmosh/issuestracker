@@ -155,7 +155,7 @@ export const createIssue = extendType({
               severity: args.severity,
             },
           });
-          await pathRevalidate(`${args.projectSlug}`);
+          await pathRevalidate(`/${args.projectSlug}`);
           return newIssueRef;
         } catch (e) {
           throw new ApolloError(e.message);

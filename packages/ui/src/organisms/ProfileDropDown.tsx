@@ -1,6 +1,6 @@
 // @ts-nocheck
-import PopOverDetails from "../organisms/PopOverDetails";
-import PopOverMenu from "../organisms/PopOverMenu";
+import PopOverDetails from "./PopOverDetails";
+import PopOverMenu from "./PopOverMenu";
 import { AuthContext } from "../../context/AuthContext";
 import React, { useContext, useState } from "react";
 

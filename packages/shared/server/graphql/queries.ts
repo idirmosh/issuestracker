@@ -201,3 +201,29 @@ export const UPDATE_VOTE = gql`
     }
   }
 `;
+
+export const GET_COMMENTS = gql`
+  query GetComments($issueId: String!) {
+    getComments(issueId: $issueId) {
+      id
+      createdAt
+      issueId
+      content
+      userId
+      user {
+        id
+        username
+        email
+        image
+      }
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+  mutation Mutation($commentId: String!) {
+    deleteComment(commentId: $commentId) {
+      id
+    }
+  }
+`;

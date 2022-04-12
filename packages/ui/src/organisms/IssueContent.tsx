@@ -29,15 +29,12 @@ function IssueContent() {
         <IssueContentAction state={{ isOpen, setIsOpen }} />
         <Divider />
         <CommentsWrapper>
-        
-          
-          {({ comment }) => (
+          {({ comments, input }) => (
             <Fragment>
               {isOpen && (
                 <CommentsMessage>
                   {user ? (
-                    <CommentForm comment={comment} />
-                
+                    <CommentForm input={input} />
                   ) : (
                     <NotLogedInToComment />
                   )}
@@ -45,7 +42,7 @@ function IssueContent() {
               )}
               {hasComment ? (
                 <div className="p-6">
-                  <Comments comment={comment} />
+                  <Comments comments={comments} />
                 </div>
               ) : (
                 <CommentsMessage>

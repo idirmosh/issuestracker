@@ -1,9 +1,9 @@
 import Logo from "../atoms/Logo";
 import MobileMenuButton from "../molecules/MobileMenuButton";
-import Menu from "../organisms/Menu";
-import MobileMenu from "../organisms/MobileMenu";
-import NavbarLogedInAction from "../organisms/NavbarLogedInAction";
-import NavbarNotLogedIn from "../organisms/NavbarNotLogedIn";
+import Menu from "./Menu";
+import MobileMenu from "./MobileMenu";
+import NavbarLogedInAction from "./NavbarLogedInAction";
+import NavbarNotLogedIn from "./NavbarNotLogedIn";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 
