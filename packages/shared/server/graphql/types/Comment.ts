@@ -68,7 +68,30 @@ export const deleteComment = extendType({
     });
   },
 });
+export const editComment = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("editComment", {
+      type: Comment,
+      args: {
+        commentId: nonNull(stringArg()),
+        commentData: nonNull(stringArg()),
+      },
+      async resolve(parent, args, { db, userId }) {
+        const editedComment = await db.comment.update({
+          where: {
+            id: args.commentId,
+          },
+          data: {
+            content: args.commentData,
+          },
+        });
 
+        return editedComment;
+      },
+    });
+  },
+});
 export const getComments = extendType({
   type: "Query",
   definition(t) {

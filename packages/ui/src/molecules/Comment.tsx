@@ -40,8 +40,15 @@ function Comment({ comment }: { comment: ExtendedComment }) {
     commentRef.current.contentEditable = "true";
     commentRef.current.focus();
     setEditMode(true);
+
     //commentRef.current.style.color = "red";
     console.dir();
+  };
+  const onCommentSubmit = () => {
+    handler({
+      payload: { commentId: comment.id, commentData: "asdasd" },
+      action: "EDIT",
+    });
   };
   return (
     <Fragment>
@@ -65,11 +72,14 @@ function Comment({ comment }: { comment: ExtendedComment }) {
 
           {canEdit && (
             <div className="flex mt-1">
-              <p
-                onClick={() => editCommentHandler(comment.id)}
-                className="text-xs font-medium text-blue-600 cursor-pointer"
-              >
-                {editMode ? "Save" : "Edit"}
+              <p className="text-xs font-medium text-blue-600 cursor-pointer">
+                {editMode ? (
+                  <span onClick={() => editCommentHandler(comment.id)}>
+                    Save
+                  </span>
+                ) : (
+                  <span onClick={onCommentSubmit}>Edit</span>
+                )}
               </p>
               <p
                 className="ml-2 text-xs font-medium text-red-400 cursor-pointer"

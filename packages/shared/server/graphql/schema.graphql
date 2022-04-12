@@ -38,6 +38,7 @@ type Mutation {
   createIssue(description: String!, projectId: String!, projectSlug: String!, severity: String!, title: String!): Issue!
   createProject(description: String!, email: String!, name: String!, url: String!): Project!
   deleteComment(commentId: String!): Comment!
+  editComment(commentData: String!, commentId: String!): Comment!
   logOut: User!
   login(password: String!, username: String!): User!
   signUp(email: String!, password: String!, username: String!): User!

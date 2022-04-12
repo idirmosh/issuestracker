@@ -227,3 +227,18 @@ export const DELETE_COMMENT = gql`
     }
   }
 `;
+
+export const EDIT_COMMENT = gql`
+  mutation Mutation($commentId: String!, $commentData: String!) {
+    editComment(commentId: $commentId, commentData: $commentData) {
+      content
+      createdAt
+      id
+      user {
+        username
+        id
+        image
+      }
+    }
+  }
+`;
