@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { IssueContext } from "../context";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Comment } from "shared/types";
-import { gql } from "@apollo/client";
+
 import {
   CREATE_COMMENT,
   DELETE_COMMENT,
@@ -46,7 +46,7 @@ function sortArrByDate(arr: Array<any>) {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 }
-export default function useComments({ query }: ICommentHook) {
+export default function useComments() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [comment, setComment] = useState<string>("");
@@ -69,56 +69,28 @@ export default function useComments({ query }: ICommentHook) {
   }, [comments]);
 
   const handler = async ({ payload, action }: ICommentHookHandler) => {
-    setLoading(true);
     const { data } = await MutationHandler({ payload, action });
     const returnedComment: Comment = data?.createComment;
-    console.log(data);
+
     switch (action) {
       case "CREATE":
+        setLoading(true);
         setComments((prev: Comment[]) => [...prev, returnedComment]);
-        setLoading(false);
         setComment("");
+        setLoading(false);
         break;
-      case "EDIT":
-        const editedComment = comments.find(
-          (comment) => comment.id == payload.commentId
+      case "DELETE":
+        const filtered: Comment = comments.filter(
+          (comment: { id: string }) => comment.id !== payload.commentId
         );
-        console.log(editedComment);
-        //setComments((prev: Comment[]) => [...prev, comm]);
-        // const nedwComment: Comment = data?.createComment;
-        // setComments((prev: Comment[]) => [...prev, newComment]);
-        // setLoading(false);
-        // setComment("");
-        break;
+        setComments((prev: any) =>
+          prev.filter(
+            (comment: { id: string }) => comment.id !== payload.commentId
+          )
+        );
       default:
         break;
     }
-    // mutate({
-    //   variables: payload,
-    //   onCompleted(data) {
-    //     switch (action) {
-    //       case "CREATE":
-    //         const newComment: Comment = data?.createComment;
-    //         setComments((prev: Comment[]) => [...prev, newComment]);
-    //         setLoading(false);
-    //         setComment("");
-    //         break;
-    //       case "EDIT":
-    //         const nedwComment: Comment = data?.createComment;
-    //         setComments((prev: Comment[]) => [...prev, newComment]);
-    //         setLoading(false);
-    //         setComment("");
-    //         break;
-    //       case "DELETE":
-    //         const filtered: Comment = comments.filter(
-    //           (comment: { id: string }) => comment.id !== payload.commentId
-    //         );
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //   },
-    // });
   };
 
   const onSubmit = () => {

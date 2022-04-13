@@ -41,9 +41,7 @@ function IssueContent() {
                 </CommentsMessage>
               )}
               {hasComment ? (
-                <div className="p-6">
-                  <Comments comments={comments} />
-                </div>
+                <Comments comments={comments} />
               ) : (
                 <CommentsMessage>
                   There are currently no comments for this issue. Be the first
