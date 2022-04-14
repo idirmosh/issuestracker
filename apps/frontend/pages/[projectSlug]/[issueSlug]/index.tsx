@@ -1,7 +1,7 @@
 // @ts-nocheck
 import apolloClient from "shared/apollo";
 import { GET_ISSUE, GET_ISSUE_PATHS } from "shared/server/graphql/queries";
-import IssueTemplate from "../../../components/templates/IssueTemplate";
+import IssueTemplate from "ui/src/templates/IssueTemplate";
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import { IssueContext } from "ui/context";
 

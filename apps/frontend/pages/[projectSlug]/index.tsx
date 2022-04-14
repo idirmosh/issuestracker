@@ -3,7 +3,7 @@ import { InferGetStaticPropsType } from "next";
 import apolloClient from "shared/apollo";
 import { GET_PROJECT, GET_PROJECT_PATHS } from "shared/server/graphql/queries";
 import { ProjectContext } from "ui/context";
-import ProjectTemplate from "../../components/templates/ProjectTemplate";
+import ProjectTemplate from "ui/src/templates/ProjectTemplate";
 import { Project } from "shared/types";
 
 function ProjectPage({
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
       params: { projectSlug: project.slug },
     })),
 
-    fallback: 'blocking'
+    fallback: "blocking",
   };
 }
 

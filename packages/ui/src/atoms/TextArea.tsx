@@ -1,8 +1,8 @@
 import React, { ChangeEvent, ReactElement } from "react";
-import { InputHookTypes } from "../../hooks/useComments";
+//import { InputHookTypes } from "../../hooks/useComments";
 type ExtendedComment = any;
 
-function TextArea({ input }: { input: InputHookTypes }): ReactElement {
+function TextArea({ input }: { input: ExtendedComment }): ReactElement {
   return (
     <textarea
       value={input.value}

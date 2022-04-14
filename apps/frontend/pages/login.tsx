@@ -1,5 +1,5 @@
 // @ts-nocheck
-import LoginTemplate from "../components/templates/LoginTemplate";
+import LoginTemplate from "ui/src/templates/LoginTemplate";
 import useUser from "ui/hooks/useUser";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

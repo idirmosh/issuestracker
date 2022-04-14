@@ -1,5 +1,5 @@
 // @ts-nocheck
-import SignUpTemplate from "../components/templates/SignUpTemplate";
+import SignUpTemplate from "ui/src/templates/SignUpTemplate";
 
 function SignUp(props) {
   return <SignUpTemplate />;

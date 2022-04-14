@@ -1,5 +1,4 @@
 import { Comment } from "shared/types";
-import { CREATE_COMMENT } from "shared/server/graphql/queries";
 import { ReactNode } from "react";
 import useComments, { ICommentHookInput } from "ui/hooks/useComments";
 
@@ -8,9 +7,7 @@ interface CommentsWrapperTypes {
 }
 
 export function CommentsWrapper({ children }: CommentsWrapperTypes) {
-  const { comments, input } = useComments({
-    query: CREATE_COMMENT,
-  });
+  const { comments, input } = useComments();
 
   return <div>{children({ comments, input })}</div>;
 }
