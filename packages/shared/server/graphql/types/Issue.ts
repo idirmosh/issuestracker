@@ -124,7 +124,30 @@ export const getIssue = extendType({
     });
   },
 });
-
+export const getLatestIssues = extendType({
+  type: "Query",
+  definition(t) {
+    t.nonNull.list.field("getLatestIssues", {
+      type: Issue,
+      async resolve(parent, args, { db }) {
+        const latestIssues = await db.issue.findMany({ take: 6 });
+        return latestIssues;
+      },
+    });
+  },
+});
+export const getTrendingIssues = extendType({
+  type: "Query",
+  definition(t) {
+    t.nonNull.list.field("getTrendingIssues", {
+      type: Issue,
+      async resolve(parent, args, { db }) {
+        const latestIssues = await db.issue.findMany({ take: 6 });
+        return latestIssues;
+      },
+    });
+  },
+});
 export const createIssue = extendType({
   type: "Mutation",
   definition(t) {
