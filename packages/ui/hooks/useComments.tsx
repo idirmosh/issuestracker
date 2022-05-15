@@ -68,37 +68,50 @@ export default function useComments() {
     refetch();
   }, [comments]);
 
+  const commentHandler = {
+    create: ({ newComment }: { newComment: Comment }) => {
+      setLoading(true);
+      setComments((oldComments: Comment[]) => [...oldComments, newComment]);
+      setComment("");
+      setLoading(false);
+    },
+    delete: ({ commentId }: { commentId: string }) => {
+      setComments((oldComments: any) =>
+        oldComments.filter(
+          (comment: { id: string }) => comment.id !== commentId
+        )
+      );
+    },
+  };
+
   const handler = async ({ payload, action }: ICommentHookHandler) => {
     const { data } = await MutationHandler({ payload, action });
     const returnedComment: Comment = data?.createComment;
 
     switch (action) {
       case "CREATE":
-        setLoading(true);
-        setComments((prev: Comment[]) => [...prev, returnedComment]);
-        setComment("");
-        setLoading(false);
+        commentHandler.create({ newComment: returnedComment });
+        // setLoading(true);
+        // setComments((prev: Comment[]) => [...prev, returnedComment]);
+        // setComment("");
+        // setLoading(false);
         break;
       case "DELETE":
-        const filtered: Comment = comments.filter(
-          (comment: { id: string }) => comment.id !== payload.commentId
-        );
-        setComments((prev: any) =>
-          prev.filter(
-            (comment: { id: string }) => comment.id !== payload.commentId
-          )
-        );
+        commentHandler.delete({ commentId: payload.commentId });
+      // setComments((prev: any) =>
+      //   prev.filter(
+      //     (comment: { id: string }) => comment.id !== payload.commentId
+      //   )
+      // );
       default:
         break;
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (comment.length > 10) {
-      handler({
-        payload: { issueId: issueRef.id, content: comment },
-        action: "CREATE",
-      });
+      const payload = { issueId: issueRef.id, content: comment };
+      await handler({ payload, action: "CREATE" });
     } else {
       setError("The comment is too short");
     }

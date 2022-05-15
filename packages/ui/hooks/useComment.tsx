@@ -18,21 +18,39 @@ function useComment({ ref, comment }: IUseCommentPropTypes) {
   const commentId: string = comment.id;
   const editableElmRef = ref.current;
   const parentElmRef = editableElmRef?.parentNode?.parentNode as HTMLElement;
-  const onEditClassNames = ["bg-gray-100", "text-gray-300"] as any;
+  const onEditClassNames = ["bg-gray-100"] as any;
 
+  const commentStateStyles = {
+    transition() {
+      parentElmRef.style.transition = ".6s all ease-in";
+      parentElmRef.style.opacity = "0";
+    },
+    ease() {
+      parentElmRef.style.transition = ".3s all ease-in";
+    },
+    default() {
+      this.ease();
+      parentElmRef.classList.remove(...onEditClassNames);
+    },
+    hover() {
+      this.ease();
+      editableElmRef.contentEditable = "true";
+      editableElmRef.style.outline = "none";
+      editableElmRef.style.color = "#abaab3";
+      editableElmRef.focus();
+      parentElmRef.classList.add(...onEditClassNames);
+    },
+  };
   const onSubmit = () => {
     const payload = { commentId, commentData: editableElmRef.textContent };
     handler({ payload, action: "EDIT" });
-    parentElmRef.classList.remove(onEditClassNames);
+    commentStateStyles.default();
     setEditMode(false);
   };
 
   const onEdit = () => {
     setEditMode(true);
-    editableElmRef.contentEditable = "true";
-    editableElmRef.focus();
-    editableElmRef.style.outline = "none";
-    parentElmRef.classList.add(onEditClassNames);
+    commentStateStyles.hover();
   };
 
   const onDelete = () => {
@@ -41,7 +59,10 @@ function useComment({ ref, comment }: IUseCommentPropTypes) {
     parentElmRef.style.opacity = "0";
   };
 
-  const onCancel = () => setEditMode(false);
+  const onCancel = () => {
+    commentStateStyles.default();
+    setEditMode(false);
+  };
 
   return { editMode, canEdit, onSubmit, onEdit, onDelete, onCancel };
 }

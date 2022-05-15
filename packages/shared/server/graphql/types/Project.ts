@@ -81,10 +81,15 @@ export const getProject = extendType({
       type: Project,
       args: { slug: nonNull(stringArg()) },
       async resolve(parent, args, { db, _userId }) {
-        const projectRef = await db.project.findFirst({
-          where: { slug: args.slug },
-        });
-        return projectRef;
+        try {
+          const projectRef = await db.project.findFirst({
+            where: { slug: args.slug },
+          });
+          console.log(args);
+          return projectRef;
+        } catch (error) {
+          console.log(error.message);
+        }
       },
     });
   },

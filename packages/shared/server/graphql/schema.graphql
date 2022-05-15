@@ -64,6 +64,7 @@ type Query {
   getComments(issueId: String!): [Comment]!
   getDashboard: [Project]!
   getIssue(slug: String!): Issue!
+  getLatestIssues: [Issue]!
   getMe: User!
   getProject(slug: String!): Project!
   getProjects: [Project]!

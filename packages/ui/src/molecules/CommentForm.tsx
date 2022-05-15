@@ -6,10 +6,12 @@ import { ReactElement, useContext } from "react";
 import { HiInformationCircle } from "react-icons/hi";
 import { RiLoader4Line } from "react-icons/ri";
 import { ICommentHookInput } from "../../hooks/useComments";
+import useComment from "../../hooks/useComment";
 
 function CommentForm({ input }: { input: ICommentHookInput }): ReactElement {
   const { contextUser: user } = useContext(AuthContext) as any;
-  const { error, loading } = input;
+
+  const { error, loading, submit } = input;
 
   return (
     <div className="pl-6 text-left">
@@ -22,7 +24,7 @@ function CommentForm({ input }: { input: ICommentHookInput }): ReactElement {
         <div className="ml-4">
           <TextArea input={input} />
 
-          <Button state={loading ? "disabled" : ""} onClick={input.submit}>
+          <Button state={loading ? "disabled" : ""} onClick={submit}>
             {loading && (
               <RiLoader4Line className="w-4 h-4 mr-1 fill-gray-500 animate-spin" />
             )}

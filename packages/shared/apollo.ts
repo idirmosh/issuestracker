@@ -5,14 +5,10 @@ const httpLink = new HttpLink({
   uri: GRAPHQL_API_URL,
   credentials: "include",
 });
-const cacheOptions = {
-  Commentz: {
-    keyFields: ["comments"],
-  },
-};
+
 const apolloClient = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache(cacheOptions as any),
+  cache: new InMemoryCache(),
 });
 
 export default apolloClient;
