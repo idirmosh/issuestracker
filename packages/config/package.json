@@ -7,10 +7,10 @@
     "eslint-preset.js"
   ],
   "dependencies": {
-    "eslint-config-next": "^12.0.8",
-    "eslint-plugin-react": "7.28.0"
+    "eslint-config-next": "^12.1.6",
+    "eslint-plugin-react": "7.30.0"
   },
   "devDependencies": {
-    "postcss-loader": "^6.2.1"
+    "postcss-loader": "^7.0.0"
   }
 }

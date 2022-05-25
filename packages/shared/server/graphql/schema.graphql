@@ -68,6 +68,7 @@ type Query {
   getMe: User!
   getProject(slug: String!): Project!
   getProjects: [Project]!
+  getTrendingIssues: [Issue]!
 }
 
 type User {
