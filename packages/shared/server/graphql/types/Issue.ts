@@ -1,4 +1,4 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { enumType, extendType, nonNull, objectType, stringArg } from "nexus";
 import { User } from "./User";
 import { Comment } from "./Comment";
 import { Project } from "./Project";
@@ -26,9 +26,9 @@ export const Issue = objectType({
     t.string("title");
     t.string("slug");
     t.string("description");
-    t.string("state");
+    t.field("status", { type: Status });
+    t.field("severity", { type: Severity });
     t.int("votes");
-    t.string("severity");
     t.list.field("comments", {
       type: Comment,
       async resolve(parent, _args, { db }) {
@@ -173,7 +173,7 @@ export const createIssue = extendType({
               title: args.title,
               slug: seoSlugify(args.title),
               description: args.description,
-              state: "pending",
+              //  state: "pending",
               votes: 1,
               severity: args.severity,
             },
@@ -186,4 +186,14 @@ export const createIssue = extendType({
       },
     });
   },
+});
+
+export const Status = enumType({
+  name: "Status",
+  members: ["OPEN", "DUBLICATE", "REVIEWING", "CLOSED"],
+});
+
+export const Severity = enumType({
+  name: "Severity",
+  members: ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
 });

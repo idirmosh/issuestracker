@@ -23,9 +23,9 @@ type Issue {
   id: String
   project: Project
   projectName: String
-  severity: String
+  severity: Severity
   slug: String
-  state: String
+  status: Status
   title: String
   updatedAt: DateTime!
   user: User
@@ -69,6 +69,20 @@ type Query {
   getProject(slug: String!): Project!
   getProjects: [Project]!
   getTrendingIssues: [Issue]!
+}
+
+enum Severity {
+  CRITICAL
+  HIGH
+  LOW
+  MEDIUM
+}
+
+enum Status {
+  CLOSED
+  DUBLICATE
+  OPEN
+  REVIEWING
 }
 
 type User {

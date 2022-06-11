@@ -14,7 +14,7 @@ export const GET_DASHBOARD = gql`
       description
       issues {
         id
-        state
+        status
       }
     }
   }
@@ -38,7 +38,7 @@ export const GET_PROJECT = gql`
         title
         slug
         description
-        state
+        status
         votes
         severity
         comments {
@@ -65,7 +65,7 @@ export const GET_ISSUE = gql`
       title
       slug
       description
-      state
+      status
       votes
       severity
       comments {
