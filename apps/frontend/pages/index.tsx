@@ -46,11 +46,11 @@ function Home({ latestIssues }) {
   );
 }
 export async function getStaticProps({ params }) {
-  const { data } = await apolloClient.query({
-    query: GET_LASTEST_ISSUES,
-  });
+  // const { data } = await apolloClient.query({
+  //   query: GET_LASTEST_ISSUES,
+  // });
   return {
-    props: { latestIssues: data.getLatestIssues },
+    props: { latestIssues: [] },
     revalidate: false,
   };
 }

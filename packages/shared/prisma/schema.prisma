@@ -50,9 +50,9 @@ model Issue {
   title       String
   description String
   slug        String    @unique
-  state       String
+  status      Status @default(OPEN)
   votes       Int?
-  severity    String
+  severity    Severity @default(MEDIUM)
   comments    Comment[]
 
   @@index([projectId])
@@ -78,4 +78,20 @@ model Vote {
   createdAt DateTime @default(now())
 
   @@index([userId, issueId])
+}
+
+
+enum Severity {
+  LOW 
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum Status {
+  OPEN 
+  DUBLICATE
+  REVIEWING
+  FIXED
+  CLOSED
 }
