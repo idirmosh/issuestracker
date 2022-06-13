@@ -22,10 +22,14 @@ interface ModalState {
 
 export interface ModalProps {
   projectId: string;
-  projectSlug:string;
+  projectSlug: string;
   handler: (arg0: boolean) => boolean;
 }
-function CreateIssueModal({ projectId, projectSlug, handler }: ModalProps): ReactElement {
+function CreateIssueModal({
+  projectId,
+  projectSlug,
+  handler,
+}: ModalProps): ReactElement {
   const [form, setForm] = useState<ModalState>({});
   const [value, setValue] = useState("");
   const router = useRouter();
@@ -46,7 +50,7 @@ function CreateIssueModal({ projectId, projectSlug, handler }: ModalProps): Reac
         projectSlug,
         title: form.title,
         description: cleanHTML,
-        severity: form.severity,
+        severity: form.severity.toUpperCase(),
       },
       onCompleted() {
         router.reload();
@@ -83,8 +87,7 @@ function CreateIssueModal({ projectId, projectSlug, handler }: ModalProps): Reac
       <InputOptions
         name="severity"
         label="Severity"
-        options={["Minor", "Major", "Critical"]}
-        handler={handleChange}
+        options={["Low", "Medium", "High", "Critical"]}
       />
       <div>
         <InputLabel label="Description" />

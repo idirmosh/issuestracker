@@ -16,7 +16,7 @@ export const IS_PROD = process.env.NODE_ENV === "production";
 export const IS_DEV = process.env.NODE_ENV !== "production";
 
 export const FRONTEND_URL = IS_DEV
-  ? "https://studio.apollographql.com"
+  ? "http://localhost:3000"
   : "https://issuestracker.vercel.app";
 
 export const GRAPHQL_API_URL = IS_DEV

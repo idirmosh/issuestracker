@@ -130,8 +130,13 @@ export const getLatestIssues = extendType({
     t.nonNull.list.field("getLatestIssues", {
       type: Issue,
       async resolve(parent, args, { db }) {
-        const latestIssues = await db.issue.findMany({ take: 6 });
-        return latestIssues;
+        try {
+          const latestIssues = await db.issue.findMany({ take: 6 });
+          return latestIssues;
+        } catch (error) {
+          console.log(error.message);
+        }
+        return Issue;
       },
     });
   },
@@ -175,10 +180,11 @@ export const createIssue = extendType({
               description: args.description,
               //  state: "pending",
               votes: 1,
-              severity: args.severity,
+              // severity: args.severity,
             },
           });
           await pathRevalidate(`/${args.projectSlug}`);
+          console.log(newIssueRef);
           return newIssueRef;
         } catch (e) {
           throw new ApolloError(e.message);
