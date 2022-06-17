@@ -1,5 +1,5 @@
 import InputLabel from "../atoms/InputLabel";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 
 interface InputOptionProps {
   label: string;
@@ -10,14 +10,33 @@ interface InputOptionProps {
 function InputOptions({ label, options }: InputOptionProps): ReactElement {
   const [defaultVal, setDefaultVal] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
-  const handleOptionChange = (e: {
-    target: { innerText: React.SetStateAction<string> };
-  }) => {
+  const dropDowRef = useRef(null);
+
+  const handleOptionChange = (e: any) => {
     setDefaultVal(e.target.innerText);
     setIsOpen(false);
   };
 
-  const handleDropDown = (_e: any) => setIsOpen(!isOpen);
+  const handleDropDown = (e: any) => setIsOpen(!isOpen);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (
+        isOpen &&
+        dropDowRef.current &&
+        !dropDowRef.current.contains(e.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", checkIfClickedOutside);
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", checkIfClickedOutside);
+    };
+  }, [isOpen]);
+
   const colors: Record<string, string> = {
     Low: "bg-blue-300",
     Medium: "bg-yellow-300",
@@ -29,8 +48,10 @@ function InputOptions({ label, options }: InputOptionProps): ReactElement {
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
-      <div className="mt-1 relative">
+      <label className="block text-sm font-medium text-gray-700 mb-2">
+        {label}
+      </label>
+      <div className="mt-1 mb-4 relative" ref={dropDowRef}>
         <button
           onClick={handleDropDown}
           type="button"

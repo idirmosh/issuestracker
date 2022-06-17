@@ -16,7 +16,7 @@ function ModalWrapper({ children }: { children: ReactNode }): ReactElement {
         >
           &#8203;
         </span>
-        <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-gray-50 rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
           {children}
         </div>
       </div>
