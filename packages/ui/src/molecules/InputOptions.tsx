@@ -20,7 +20,7 @@ function InputOptions({ label, options }: InputOptionProps): ReactElement {
   const handleDropDown = (e: any) => setIsOpen(!isOpen);
 
   useEffect(() => {
-    const checkIfClickedOutside = (e) => {
+    const checkIfClickedOutside = (e: any) => {
       if (
         isOpen &&
         dropDowRef.current &&
