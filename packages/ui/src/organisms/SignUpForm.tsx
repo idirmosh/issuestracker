@@ -29,6 +29,7 @@ function SignUpForm() {
       password: form.password,
     };
     const { error, status, ok } = await signUp(options);
+
     if (error) {
       setError(error);
       setTimeout(() => setError(""), 5000);

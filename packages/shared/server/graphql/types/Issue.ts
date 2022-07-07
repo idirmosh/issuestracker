@@ -6,6 +6,7 @@ import {
   AuthenticationError,
   UserInputError,
   ApolloError,
+  ValidationError,
 } from "apollo-server-micro";
 import { seoSlugify } from "shared/libs/helpers";
 import { pathRevalidate } from "shared/server/utils";
@@ -124,6 +125,7 @@ export const getIssue = extendType({
     });
   },
 });
+
 export const getLatestIssues = extendType({
   type: "Query",
   definition(t) {
@@ -135,12 +137,14 @@ export const getLatestIssues = extendType({
           return latestIssues;
         } catch (error) {
           console.log(error.message);
+          // throw new ValidationError("Invalid Query");
         }
         return Issue;
       },
     });
   },
 });
+
 export const getTrendingIssues = extendType({
   type: "Query",
   definition(t) {
@@ -169,7 +173,6 @@ export const createIssue = extendType({
         if (!userId) {
           throw new AuthenticationError("The server failed to authenticate");
         }
-
         try {
           const newIssueRef = await db.issue.create({
             data: {
@@ -178,13 +181,11 @@ export const createIssue = extendType({
               title: args.title,
               slug: seoSlugify(args.title),
               description: args.description,
-              //  state: "pending",
               votes: 1,
-              // severity: args.severity,
+              severity: args.severity,
             },
           });
           await pathRevalidate(`/${args.projectSlug}`);
-          console.log(newIssueRef);
           return newIssueRef;
         } catch (e) {
           throw new ApolloError(e.message);

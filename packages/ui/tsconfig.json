@@ -1,5 +1,5 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": [".", "config/postcss.config.js"],
+  "include": [".", "config/tailwind.config.js", "config/postcss.config.js"],
   "exclude": ["dist", "build", "node_modules"]
 }

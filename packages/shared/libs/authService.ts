@@ -34,7 +34,6 @@ export async function signUp(options) {
       mutation: SIGN_UP,
       variables: { username, email, password },
     };
-
     const { data } = await apolloClient.mutate(config);
 
     if (canRedirect) {

@@ -34,7 +34,7 @@ export type Issue = {
   project: string;
   severity: string;
   slug: string;
-  state: string;
+  status: string;
   title: string;
   votes: number;
 };

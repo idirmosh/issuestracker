@@ -1,8 +1,6 @@
 const colors = require("tailwindcss/colors");
-const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  mode: "jit",
   content: [
     "./components/**/*.{js,ts,jsx,tsx}",
     "../../packages/ui/**/*.{js,ts,jsx,tsx}",
@@ -22,6 +20,7 @@ module.exports = {
         800: "#1e293b",
         900: "#0f172a",
       },
+      blue: colors.blue,
       indigo: {
         50: "#F0F5FF",
         100: "#E5EDFF",

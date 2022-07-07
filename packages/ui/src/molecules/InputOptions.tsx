@@ -1,19 +1,20 @@
-import InputLabel from "../atoms/InputLabel";
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 
 interface InputOptionProps {
   label: string;
   name: string;
-  options: Array<string>;
+  value: string;
+  severityOptions: Array<string>;
+  handleOptionChange: any;
 }
 
-function InputOptions({ label, options }: InputOptionProps): ReactElement {
-  const [defaultVal, setDefaultVal] = useState(options[0]);
+function InputOptions(props: InputOptionProps): ReactElement {
+  const { label, severityOptions, value, handleOptionChange } = props;
   const [isOpen, setIsOpen] = useState(false);
   const dropDowRef = useRef(null);
 
-  const handleOptionChange = (e: any) => {
-    setDefaultVal(e.target.innerText);
+  const handleChange = (e: any) => {
+    handleOptionChange(e.target.innerText);
     setIsOpen(false);
   };
 
@@ -21,13 +22,10 @@ function InputOptions({ label, options }: InputOptionProps): ReactElement {
 
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
-      if (
-        isOpen &&
-        dropDowRef.current &&
-        !dropDowRef.current.contains(e.target)
-      ) {
-        setIsOpen(false);
-      }
+      const canDropDownClose =
+        isOpen && dropDowRef.current && !dropDowRef.current.contains(e.target);
+
+      if (canDropDownClose) setIsOpen(false);
     };
     document.addEventListener("mousedown", checkIfClickedOutside);
 
@@ -43,6 +41,7 @@ function InputOptions({ label, options }: InputOptionProps): ReactElement {
     High: "bg-orange-300",
     Critical: "bg-red-600",
   };
+
   const outlineColorGen = (val: string) =>
     `${colors[val]} flex-shrink-0 inline-block h-2 w-2 rounded-full`;
 
@@ -61,11 +60,8 @@ function InputOptions({ label, options }: InputOptionProps): ReactElement {
           aria-labelledby="listbox-label"
         >
           <div className="flex items-center">
-            <span
-              aria-label="Online"
-              className={outlineColorGen(defaultVal)}
-            ></span>
-            <span className="ml-3 block truncate"> {defaultVal} </span>
+            <span aria-label="Online" className={outlineColorGen(value)}></span>
+            <span className="ml-3 block truncate"> {value} </span>
           </div>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <svg
@@ -90,11 +86,11 @@ function InputOptions({ label, options }: InputOptionProps): ReactElement {
             role="listbox"
             aria-labelledby="listbox-label"
           >
-            {options.map((option) => (
+            {severityOptions.map((option) => (
               <li
-                onClick={handleOptionChange}
+                onClick={handleChange}
                 key={option}
-                value={defaultVal}
+                value={value}
                 className="text-gray-900 cursor-pointer select-none relative py-3 pl-3 pr-9 hover:bg-gray-100"
                 role="option"
               >
@@ -107,7 +103,7 @@ function InputOptions({ label, options }: InputOptionProps): ReactElement {
                     {option}
                   </span>
                 </div>
-                {defaultVal === option && (
+                {value === option && (
                   <span className="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
                     <svg
                       className="h-5 w-5"

@@ -127,7 +127,9 @@ export const signUp = extendType({
       async resolve(_parent, args, { db }, _info) {
         try {
           const { username, email, password } = args;
+
           const [salt, hash] = generatePwds(password);
+
           const user = await db.user.create({
             data: {
               username,
@@ -137,9 +139,14 @@ export const signUp = extendType({
               hash,
             },
           });
+
+          console.log({ user });
           return user;
         } catch (e: any) {
-          throw new UserInputError(`${e.meta?.target[0]} already exists!`);
+          console.log(e);
+          if (e.code === "P2002") {
+            throw new UserInputError(`Email or Username already exists!`);
+          }
         }
       },
     });

@@ -8,12 +8,6 @@ import React, { ReactElement, useState } from "react";
 import Modal from "./Modal";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
-import ModalNote from "../molecules/ModalNote";
-import { ModalIcon } from "./CreateProjectModal";
-import TextArea from "../atoms/TextArea";
-
-const ReactQuill =
-  typeof window === "object" ? require("react-quill") : () => false;
 
 interface ModalState {
   title?: string;
@@ -32,19 +26,31 @@ function CreateIssueModal({
   projectSlug,
   handler,
 }: ModalProps): ReactElement {
-  const [form, setForm] = useState<ModalState>({} as any);
+  const severityOptions: Array<string> = ["Low", "Medium", "High", "Critical"];
+
+  const [form, setForm] = useState<ModalState>({
+    severity: severityOptions[0],
+  } as any);
+
   const [value, setValue] = useState("");
   const router = useRouter();
   const [submitIssue, { data, loading, error }] = useMutation(CREATE_ISSUE);
 
   const cleanHTML = DOMPurify.sanitize(value);
-  const handleChange = (e: any) =>
+
+  const handleOptionChange = (value: string) => {
+    setForm({ ...form, severity: value });
+  };
+
+  const handleChange = (e: any) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
+  };
 
   const handleSubmit = (e: React.ChangeEvent<{ value: string }>): void => {
+    console.log(form);
     e.preventDefault();
     submitIssue({
       variables: {
@@ -78,15 +84,18 @@ function CreateIssueModal({
         holder="Issue title"
       />
       <InputOptions
+        value={form.severity}
+        handleOptionChange={handleOptionChange}
+        severityOptions={severityOptions}
         name="severity"
         label="Severity"
-        options={["Low", "Medium", "High", "Critical"]}
       />
       <div className="block col-span-6 mb-4 sm:col-span-3">
         <InputLabel label="Issue description" />
         <textarea
+          name="description"
           value={form.description}
-          onChange={setForm}
+          onChange={handleChange}
           className="w-full p-2 mb-3 border border-gray-300 rounded-md resize-y focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
           cols={100}
           rows={3}
