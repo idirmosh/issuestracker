@@ -20,16 +20,13 @@
     "ui": "*"
   },
   "devDependencies": {
+    "config": "*",
+    "tsconfig": "*",
     "@types/node": "^18.0.0",
     "@types/react": "18.0.14",
-    "autoprefixer": "^10.4.7",
-    "config": "*",
     "eslint": "8.18.0",
     "next-transpile-modules": "9.0.0",
-    "postcss": "^8.4.14",
     "prisma": "^3.15.2",
-    "tailwindcss": "^3.1.4",
-    "tsconfig": "*",
     "typescript": "^4.7.4"
   }
 }

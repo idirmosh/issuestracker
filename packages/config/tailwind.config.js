@@ -2,7 +2,7 @@ const colors = require("tailwindcss/colors");
 
 module.exports = {
   content: [
-    "./components/**/*.{js,ts,jsx,tsx}",
+    "../../apps/frontend/pages/**/*.{js,ts,jsx,tsx}",
     "../../packages/ui/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -20,7 +20,6 @@ module.exports = {
         800: "#1e293b",
         900: "#0f172a",
       },
-      blue: colors.blue,
       indigo: {
         50: "#F0F5FF",
         100: "#E5EDFF",
@@ -46,6 +45,6 @@ module.exports = {
         ringOffsetColor: ["focus-visible"],
       },
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/forms")],
   },
 };
