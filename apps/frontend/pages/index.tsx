@@ -32,7 +32,7 @@ const GET_LASTEST_ISSUES = gql`
     }
   }
 `;
-function Home({ latestIssues = [] }) {
+function Home({ latestIssues }) {
   console.log(latestIssues);
   return (
     <div className="mx-auto w-full max-w-7xl flex-grow  py-7 lg:flex xl:px-8">
@@ -82,10 +82,10 @@ function Home({ latestIssues = [] }) {
             </div>
           </div>
           <div>
-            <HomeIssueCard />
-            <HomeIssueCard />
-            <HomeIssueCard />
-            <HomeIssueCard />
+            {latestIssues &&
+              latestIssues.map((issue) => (
+                <HomeIssueCard key={issue.id} issue={issue} />
+              ))}
           </div>
         </div>
       </div>
@@ -93,18 +93,18 @@ function Home({ latestIssues = [] }) {
   );
 }
 
-// export async function getStaticProps({ params }) {
-//   const { data } = await apolloClient.query({
-//     query: GET_LASTEST_ISSUES,
-//   });
+export async function getStaticProps({ params }) {
+  const { data } = await apolloClient.query({
+    query: GET_LASTEST_ISSUES,
+  });
 
-//   return {
-//     props: { latestIssues: data?.getLatestIssues },
-//     revalidate: false,
-//   };
-// }
+  return {
+    props: { latestIssues: data?.getLatestIssues },
+    revalidate: false,
+  };
+}
 
-function HomeIssueCard() {
+function HomeIssueCard({ issue }) {
   return (
     <div className="ease relative col-span-8 flex cursor-pointer flex-col justify-between rounded-none border-b p-6 transition-shadow duration-500 hover:bg-slate-100 hover:bg-opacity-70 sm:p-8 xl:col-span-8">
       <div className="relative rounded-none p-0 sm:rounded-t-xl">
@@ -113,7 +113,7 @@ function HomeIssueCard() {
             <a href="keyur1" className="click-attached flex-shrink-0">
               <img
                 className="h-8 w-8 rounded-full"
-                src="https://cdn.devdojo.com/users/June2022/keyur1.jpg"
+                src={issue.user.image}
                 alt=""
               />
             </a>
@@ -126,16 +126,19 @@ function HomeIssueCard() {
                   href="keyur1"
                   className="ignore-dynamic-click click-attached hover:underline"
                 >
-                  Username
+                  {issue.project.name}
                 </a>
-                <span className="text-xs text-gray-500"> · 4 days ago</span>
+                <span className="text-xs text-gray-500">
+                  {" "}
+                  · {formatDate(issue.createdAt, "before")}
+                </span>
               </p>
               <h1 className="theme-text line-clamp-2 text-base font-medium leading-tight">
-                How to put some title ina div
+                {issue.title}
               </h1>
-              <div className="theme-text line-clamp-2 mt-2 inline-block text-sm opacity-50 sm:text-sm">
+              {/* <div className="theme-text line-clamp-2 mt-2 inline-block text-sm opacity-50 sm:text-sm">
                 some data
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -304,7 +307,7 @@ function HomeIssueCardComment() {
 
 function HomeIssueCardBadge() {
   return (
-    <div className="border-light mr-2 flex  h-8 flex-shrink-0 items-center rounded-full border px-2 text-xs uppercase hover:bg-slate-100">
+    <div className="border-light mr-2 flex  h-8 flex-shrink-0 items-center rounded-full border px-3 text-xs uppercase hover:bg-slate-100">
       {/* <svg
         className="mr-1 h-5 w-5"
         fill="currentColor"
@@ -314,7 +317,7 @@ function HomeIssueCardBadge() {
         <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path>
         <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>
       </svg> */}
-      <span>Open</span>
+      <span className="-mb-1 leading-none">Open</span>
     </div>
   );
 }
