@@ -26,3 +26,5 @@ We have 2 important folders inside the root directory:
   - **tsconfig:** contains shared typescript configs.
   - **scripts:** contains a script to generate rsa key pairs.
   - **ui:** shared ui library.
+
+<!-- npx prisma db push --preview-feature -->

@@ -25,11 +25,16 @@ export const User = objectType({
     t.list.field("projects", {
       type: Project,
       async resolve(parent, _args, { db }) {
-        return await db.project.findMany({
-          where: {
-            userId: parent.id,
-          },
-        });
+        try {
+          return await db.project.findMany({
+            where: {
+              userId: parent.id,
+            },
+          });
+        } catch(error) {
+          console.log("can reach user")
+        }
+       
       },
     });
     t.list.field("comments", {

@@ -16,7 +16,7 @@ interface IProps {
 }
 
 interface IContext {
-  db: PrismaClient;
+  db: PrismaClient | any;
   res: NextApiResponse;
   req: ExtendedNextApiRequest;
   userId: UserID;

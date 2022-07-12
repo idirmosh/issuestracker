@@ -1,13 +1,13 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  // previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider             = "mysql"
+  provider             = "postgresql"
   url                  = env("DATABASE_URL")
-  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
-  referentialIntegrity = "prisma"
+  // shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+  // referentialIntegrity = "prisma"
 }
 
 model User {

@@ -6,13 +6,13 @@ import ProjectCardHeader from "../molecules/ProjectCardHeader";
 
 function ProjectCard({ project }: { project: Project }) {
   const issues = project.issues;
-  const resolvedIssues = issues.filter((issue) => issue.state === "resolved");
-  const pendingIssues = issues.filter((issue) => issue.state === "pending");
+  const resolvedIssues = issues.filter((issue) => issue.status === "resolved");
+  const pendingIssues = issues.filter((issue) => issue.status === "pending");
   return (
     <Link href={`/${project.slug}`}>
       <a>
-        <li className="col-span-1 bg-white border border-gray-200 rounded-md cursor-pointer min-h-min hover:shadow-md">
-          <div className="flex flex-col items-start w-full p-6">
+        <li className="col-span-1 min-h-min cursor-pointer rounded-md border border-gray-200 bg-white hover:shadow-md">
+          <div className="flex w-full flex-col items-start p-6">
             <ProjectCardHeader
               name={project.name}
               url={project.url}
