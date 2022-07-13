@@ -1,13 +1,10 @@
-generator client {
-  provider        = "prisma-client-js"
-  // previewFeatures = ["referentialIntegrity"]
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
 }
 
-datasource db {
-  provider             = "postgresql"
-  url                  = env("DATABASE_URL")
-  // shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
-  /// referentialIntegrity = "prisma"
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
@@ -18,15 +15,14 @@ model User {
   image     String
   salt      String    @unique
   hash      String    @unique
-  prrojects Project[]
   comment   Comment[]
   issues    Issue[]
+  prrojects Project[]
   votes     Vote[]
 }
 
 model Project {
   id          String   @id @default(cuid())
-  user        User?    @relation(fields: [userId], references: [id])
   userId      String?
   createdAt   DateTime @default(now())
   name        String   @unique
@@ -34,6 +30,7 @@ model Project {
   slug        String   @unique
   url         String
   description String
+  user        User?    @relation(fields: [userId], references: [id])
   issues      Issue[]
 
   @@index([userId])
@@ -41,18 +38,18 @@ model Project {
 
 model Issue {
   id          String    @id @default(cuid())
-  project     Project?  @relation(fields: [projectId], references: [id])
   projectId   String?
-  user        User?     @relation(fields: [userId], references: [id])
   userId      String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   title       String
   description String
   slug        String    @unique
-  status      Status @default(OPEN)
+  status      Status    @default(OPEN)
   votes       Int?
-  severity    Severity @default(MEDIUM)
+  severity    Severity  @default(MEDIUM)
+  project     Project?  @relation(fields: [projectId], references: [id])
+  user        User?     @relation(fields: [userId], references: [id])
   comments    Comment[]
 
   @@index([projectId])
@@ -60,12 +57,12 @@ model Issue {
 
 model Comment {
   id        String   @id @default(cuid())
-  issue     Issue?   @relation(fields: [issueId], references: [id])
   issueId   String?
   createdAt DateTime @default(now())
   content   String
-  user      User?    @relation(fields: [userId], references: [id])
   userId    String?
+  issue     Issue?   @relation(fields: [issueId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
 
   @@index([issueId])
 }
@@ -73,23 +70,22 @@ model Comment {
 model Vote {
   id        String   @id @default(cuid())
   issueId   String?
-  user      User?    @relation(fields: [userId], references: [id])
   userId    String?
   createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
 
   @@index([userId, issueId])
 }
 
-
 enum Severity {
-  LOW 
+  LOW
   MEDIUM
   HIGH
   CRITICAL
 }
 
 enum Status {
-  OPEN 
+  OPEN
   DUBLICATE
   REVIEWING
   FIXED

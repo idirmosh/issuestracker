@@ -2,7 +2,6 @@ import apolloClient from "shared/apollo";
 import { gql } from "@apollo/client";
 import Link from "next/link";
 import { formatDate } from "shared/libs/helpers";
-import { Fragment } from "react";
 
 const GET_LASTEST_ISSUES = gql`
   query GetLatestIssues {
@@ -33,7 +32,7 @@ const GET_LASTEST_ISSUES = gql`
   }
 `;
 function Home({ latestIssues }) {
-  console.log(latestIssues);
+  //console.log(latestIssues);
   return (
     <div className="mx-auto w-full max-w-7xl flex-grow  py-7 lg:flex xl:px-8">
       {/* <!-- Left sidebar & main wrapper --> */}
@@ -97,7 +96,6 @@ export async function getStaticProps({ params }) {
   const { data } = await apolloClient.query({
     query: GET_LASTEST_ISSUES,
   });
- 
 
   return {
     props: { latestIssues: data?.getLatestIssues },
