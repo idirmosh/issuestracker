@@ -13,6 +13,7 @@ export default function Document(_props: any) {
           crossOrigin="true"
         />
         <link href={FONT_URL} rel="stylesheet" />
+        <link rel="shortcut icon" href="/static/favicon.ico" />
       </Head>
       <body className="font-rubik">
         <Main />
