@@ -2,6 +2,7 @@ import apolloClient from "shared/apollo";
 import { gql } from "@apollo/client";
 import Link from "next/link";
 import { formatDate } from "shared/libs/helpers";
+import Badge from "ui/components/Badge";
 
 const GET_LASTEST_ISSUES = gql`
   query GetLatestIssues {
@@ -10,6 +11,7 @@ const GET_LASTEST_ISSUES = gql`
       createdAt
       updatedAt
       userId
+      status
       project {
         id
         name
@@ -104,6 +106,7 @@ export async function getStaticProps({ params }) {
 }
 
 function HomeIssueCard({ issue }) {
+  console.log({ issue });
   return (
     <div className="ease relative col-span-8 flex cursor-pointer flex-col justify-between rounded-none border-b p-6 transition-shadow duration-500 hover:bg-slate-100 hover:bg-opacity-70 sm:p-8 xl:col-span-8">
       <div className="relative rounded-none p-0 sm:rounded-t-xl">
@@ -145,7 +148,8 @@ function HomeIssueCard({ issue }) {
 
       <div className="flex items-center justify-between rounded-none pt-4 sm:pl-11">
         <div>
-          <HomeIssueCardBadge />
+          {/* <HomeIssueCardBadge /> */}
+          <Badge status={issue.status} />
         </div>
         <div className="flex w-full items-center justify-end">
           <HomeIssueCardComment />
@@ -306,20 +310,38 @@ function HomeIssueCardComment() {
 
 function HomeIssueCardBadge() {
   return (
-    <div className="border-light mr-2 flex  h-8 flex-shrink-0 items-center rounded-full border px-3 text-xs uppercase hover:bg-slate-100">
-      {/* <svg
-        className="mr-1 h-5 w-5"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path>
-        <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>
-      </svg> */}
-      <span className="-mb-1 leading-none">Open</span>
+    // <div className="border-light mr-2 flex  h-8 flex-shrink-0 items-center rounded-full border px-3 text-xs uppercase hover:bg-slate-100">
+    //   {/* <svg
+    //     className="mr-1 h-5 w-5"
+    //     fill="currentColor"
+    //     viewBox="0 0 20 20"
+    //     xmlns="http://www.w3.org/2000/svg"
+    //   >
+    //     <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"></path>
+    //     <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"></path>
+    //   </svg> */}
+    //   <span className="-mb-1 leading-none">Open</span>
+    // </div>
+    <div>
+      <Badge kind="icon" status="Approved">
+        <svg className="mr-1.5 h-4 w-4 fill-current" viewBox="0 0 32 32">
+          <path d="M8.52 14.58l-1.46 1.42 6.52 6.34 18.42-18.22-1.48-1.48-16.96 16.84zM28.82 12.76c0.262 0.967 0.421 2.081 0.44 3.229l0 0.011c0 7.5-6.080 13.58-13.58 13.58s-13.58-6.080-13.58-13.58c0-7.5 6.080-13.58 13.58-13.58v0c2.748 0.004 5.302 0.832 7.429 2.251l-0.049-0.031 1.54-1.52c-2.477-1.752-5.559-2.8-8.886-2.8-0.012 0-0.024 0-0.036 0h0.002c-0.017-0-0.038-0-0.058-0-8.693 0-15.74 7.047-15.74 15.74s7.047 15.74 15.74 15.74c8.693 0 15.74-7.047 15.74-15.74 0-1.796-0.301-3.522-0.855-5.131l0.033 0.111-1.72 1.72z" />
+        </svg>
+      </Badge>
+      <Badge kind="icon" status="CLOSED" />
+      <Badge kind="dot" status="FIXED" />
     </div>
   );
 }
+
+// enum Status {
+//   OPEN
+//   DUBLICATE
+//   REVIEWING
+//   FIXED
+//   CLOSED
+// }
+
 export default Home;
 
 // <div classNameNameNameNameName="relative pb-5 mx-auto mt-12 max-w-7xl sm:pb-0 px-4">
