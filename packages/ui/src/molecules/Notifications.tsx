@@ -7,12 +7,12 @@ function Notifications() {
   return (
     <button
       type="button"
-      className="p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+      className="rounded-full bg-[#1E194D] p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-800"
     >
       <span className="sr-only">View notifications</span>
       {/* <!-- Heroicon name: outline/bell --> */}
       <svg
-        className="w-6 h-6"
+        className="h-6 w-6"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

@@ -2,7 +2,7 @@ import apolloClient from "shared/apollo";
 import { gql } from "@apollo/client";
 import Link from "next/link";
 import { formatDate } from "shared/libs/helpers";
-import Badge from "ui/components/Badge";
+import Badge, { NewCard } from "ui/components/Badge";
 
 const GET_LASTEST_ISSUES = gql`
   query GetLatestIssues {
@@ -85,7 +85,7 @@ function Home({ latestIssues }) {
           <div>
             {latestIssues &&
               latestIssues.map((issue) => (
-                <HomeIssueCard key={issue.id} issue={issue} />
+                <NewCard key={issue.id} issue={issue} />
               ))}
           </div>
         </div>

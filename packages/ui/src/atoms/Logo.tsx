@@ -1,21 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-//import LogoImage from "../../public/logo.png";
+//import LogoImage from "";
 
 function Logo() {
   return (
-    <div className="flex items-center flex-shrink-0">
+    <div className="flex h-8 w-8 flex-shrink-0 items-center">
       <Link href="/">
         <a>
-          {/* <Image
-            src={LogoImage}
-            alt="Picture of the author"
-            // width={500} automatically provided
-            // height={500} automatically provided
-            // blurDataURL="data:..." automatically provided
-            // placeholder="blur" // Optional blur-up while loading
-          /> */}
+          <svg
+            className="w-full"
+            viewBox="0 0 58 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M23.8824 30.3158C23.8824 28.4555 25.4099 26.9474 27.2941 26.9474C29.1784 26.9474 30.7059 28.4555 30.7059 30.3158V43.7895C30.7059 45.6498 29.1784 47.1579 27.2941 47.1579C25.4099 47.1579 23.8824 45.6498 23.8824 43.7895V30.3158Z"
+              fill="white"
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M31.1358 10.1053H13.6471C6.11 10.1053 0 16.1376 0 23.5789V50.5263C0 57.9676 6.11 64 13.6471 64H40.9412C48.4782 64 54.5882 57.9676 54.5882 50.5263V23.5789C54.5882 23.1952 54.572 22.8151 54.5401 22.4395C56.6921 20.0577 58 16.9165 58 13.4737C58 6.03237 51.89 0 44.3529 0C37.994 0 32.6508 4.29397 31.1358 10.1053ZM31.1358 16.8421H13.6471C9.87853 16.8421 6.82353 19.8583 6.82353 23.5789V50.5263C6.82353 54.247 9.87853 57.2632 13.6471 57.2632H40.9412C44.7097 57.2632 47.7647 54.247 47.7647 50.5263V26.5229C46.6742 26.8 45.531 26.9474 44.3529 26.9474C37.994 26.9474 32.6508 22.6534 31.1358 16.8421ZM44.3529 6.73684C40.5844 6.73684 37.5294 9.75303 37.5294 13.4737C37.5294 17.1943 40.5844 20.2105 44.3529 20.2105C48.1215 20.2105 51.1765 17.1943 51.1765 13.4737C51.1765 9.75303 48.1215 6.73684 44.3529 6.73684Z"
+              fill="white"
+            />
+          </svg>
         </a>
       </Link>
     </div>
