@@ -31,10 +31,10 @@ export type Issue = {
   createdAt: string;
   description: string;
   id: string;
-  project: string;
-  severity: string;
+  project: Project;
+  severity: Severity;
   slug: string;
-  status: string;
+  status: Status;
   title: string;
   votes: number;
 };
@@ -47,3 +47,18 @@ export type Comment = {
   user: User;
   userId: string;
 };
+
+export enum Severity {
+  LOW,
+  MEDIUM,
+  HIGH,
+  CRITICAL,
+}
+
+export enum Status {
+  OPEN,
+  DUBLICATE,
+  REVIEWING,
+  FIXED,
+  CLOSED,
+}
