@@ -1,11 +1,12 @@
-import React, { ReactElement } from "react";
-
+import { ReactElement } from "react";
+import ToolTip from "../../components/ToolTip";
+// deprecated in favor of severitybadge
 function SeverityBar({ severity }: { severity: string }): ReactElement {
   const severitylevels = [
-    { name: "critical", value: 4, color: "#CE2E2E" },
-    { name: "high", value: 3, color: "#EFA044" },
-    { name: "medium", value: 2, color: "#4F46E5" },
-    { name: "low", value: 1, color: "#6EB24D" },
+    { name: "critical", value: 4, color: "#D0353F" },
+    { name: "high", value: 3, color: "#E67F01" },
+    { name: "medium", value: 2, color: "#1885C3" },
+    { name: "low", value: 1, color: "#7AA809" },
   ];
 
   const current = severitylevels.filter(({ name }) => {
@@ -16,7 +17,7 @@ function SeverityBar({ severity }: { severity: string }): ReactElement {
   let active = Array.from(Array(current?.value).keys());
 
   return (
-    <ToolTip text="Simple tooltip">
+    <ToolTip text={`Severity level is ${severity.toLowerCase()}`}>
       <div className="flex h-7 items-center justify-center rounded-full border border-gray-300 bg-white fill-gray-800 py-0.5 px-3 text-xs leading-5 text-gray-800">
         <span className="leading-0 -mb-0.5 font-semibold capitalize leading-5 tracking-wider">
           {severity}
@@ -44,36 +45,6 @@ function SeverityBar({ severity }: { severity: string }): ReactElement {
         </svg>
       </div>
     </ToolTip>
-  );
-}
-
-function ToolTip({ children, text, ...rest }) {
-  const [show, setShow] = React.useState(false);
-  // background: #5a5a5a;
-  // border: none;
-  // height: 12px;
-  // width: 12px;
-  // top: -7px;
-  // transform: rotate(45deg);
-
-  const toolTipBoxStyles =
-    "absolute bg-gray-900 text-white py-1 px-2 rounded-lg bottom-8 bg-opacity-75";
-  return (
-    <div className="relative">
-      <div
-        className={show ? `${toolTipBoxStyles}` : `${toolTipBoxStyles} hidden`}
-      >
-        {text}
-        <span className="absolute -top-1 border-x-8 border-t-8 border-b-0 border-solid border-x-transparent border-t-black" />
-      </div>
-      <div
-        onMouseEnter={() => setShow(true)}
-        onMouseLeave={() => setShow(false)}
-        {...rest}
-      >
-        {children}
-      </div>
-    </div>
   );
 }
 
