@@ -133,7 +133,7 @@ export const getLatestIssues = extendType({
       type: Issue,
       async resolve(parent, args, { db }) {
         try {
-          const latestIssues = await db.issue.findMany({ take: 6 });
+          const latestIssues = await db.issue.findMany({ take: 12 });
           return latestIssues;
         } catch (error) {
           console.log(error.message);
