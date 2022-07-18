@@ -2,7 +2,11 @@ const withTM = require("next-transpile-modules")(["ui", "api", "shared"]);
 
 const config = {
   images: {
-    domains: ["pbs.twimg.com", "s.gravatar.com"],
+    domains: [
+      "pbs.twimg.com",
+      "s.gravatar.com",
+      "avatars.githubusercontent.com",
+    ],
   },
   reactStrictMode: true,
   strictMode: true,

@@ -27,6 +27,7 @@ model Project {
   createdAt   DateTime @default(now())
   name        String   @unique
   email       String
+  image       String
   slug        String   @unique
   url         String
   description String

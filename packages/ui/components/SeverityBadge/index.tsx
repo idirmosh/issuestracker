@@ -16,7 +16,6 @@ function SeverityBadge(props: ISeverityBadge): ReactElement {
   ];
 
   const current = severitylevels.filter(({ name }) => {
-    console.log({ name, severity });
     return name === severity.toString().toLowerCase();
   })[0];
 
@@ -24,7 +23,7 @@ function SeverityBadge(props: ISeverityBadge): ReactElement {
 
   return (
     <ToolTip text={`Severity level is ${severity.toString().toLowerCase()}`}>
-      <div className="flex h-7 items-center justify-center rounded-full border border-gray-300 bg-white fill-gray-800 py-0.5 px-3 text-xs leading-5 text-gray-800">
+      <div className="flex h-7 min-w-[149px] max-w-[150px] items-center justify-center rounded-full border border-gray-300 bg-white fill-gray-800 py-0.5 px-3 text-xs leading-5 text-gray-800">
         <span className="leading-0 -mb-0.5 font-semibold capitalize leading-5 tracking-wider">
           {severity}
         </span>

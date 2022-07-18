@@ -32,9 +32,9 @@ export type Issue = {
   description: string;
   id: string;
   project: Project;
-  severity: Severity;
+  severity: Severity | string;
   slug: string;
-  status: Status;
+  status: Status | string;
   title: string;
   votes: number;
 };

@@ -7,17 +7,17 @@ const getFavicon = (domain) => {
   return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}/&size=64`;
 };
 
-function ProjectCardHeader({ name, url, description }) {
+function ProjectCardHeader({ name, url, description, image }) {
   return (
     <>
       <div className="flex items-start">
-        <img className="w-12 h-12" src={getFavicon(url)} alt="" />
-        <div className="flex flex-col ml-3">
+        <img className="h-12 w-12" src={image} alt="" />
+        <div className="ml-3 flex flex-col">
           <h2 className="text-xl font-bold text-gray-700">{name}</h2>
           <p className="text-sm text-gray-400">{url}</p>
         </div>
       </div>
-      <p className="text-sm mt-4 text-gray-500">{description}</p>
+      <p className="mt-4 text-sm text-gray-500">{description}</p>
     </>
   );
 }

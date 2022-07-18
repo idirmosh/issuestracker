@@ -1,10 +1,11 @@
 import db from "shared/db";
 import { seoSlugify } from "shared/libs/helpers";
 import { AuthenticationError } from "apollo-server-micro";
-import { objectType, extendType, nonNull, stringArg } from "nexus";
+import { objectType, extendType, nonNull, stringArg, arg } from "nexus";
 import { Issue } from "./Issue";
 import { User } from "./User";
 import { pathRevalidate } from "shared/server/utils";
+import { generateSignedS3URL } from "../../utils/s3";
 
 export const Project = objectType({
   name: "Project",
@@ -40,6 +41,15 @@ export const Project = objectType({
         });
       },
     });
+  },
+});
+
+export const File = objectType({
+  name: "File",
+  definition(t) {
+    t.int("size");
+    t.string("url");
+    t.string("type");
   },
 });
 
@@ -118,6 +128,28 @@ export const getProjects = extendType({
   },
 });
 
+export const uploadImage = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("uploadImage", {
+      type: File,
+      args: {
+        name: nonNull(stringArg()),
+        type: nonNull(stringArg()),
+      },
+      async resolve(parent, args, { db, userId }) {
+        try {
+          const url = await generateSignedS3URL(args.name, args.type);
+          // console.log(url);
+          return { url: url };
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
+  },
+});
+
 export const createProject = extendType({
   type: "Mutation",
   definition(t) {
@@ -128,11 +160,13 @@ export const createProject = extendType({
         url: nonNull(stringArg()),
         email: nonNull(stringArg()),
         description: nonNull(stringArg()),
+        image: nonNull(stringArg()),
       },
       async resolve(parent, args, { db, userId }) {
         if (!userId) {
           throw new AuthenticationError("The server failed to authenticate");
         } else {
+          console.log(args);
           const newProjecRef = await db.project.create({
             data: {
               userId,
@@ -140,6 +174,7 @@ export const createProject = extendType({
               url: args.url,
               email: args.url,
               slug: seoSlugify(args.name),
+              image: args.image,
               description: args.description,
             },
           });

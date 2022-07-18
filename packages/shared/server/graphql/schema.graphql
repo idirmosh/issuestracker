@@ -16,6 +16,12 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+type File {
+  size: Int
+  type: String
+  url: String
+}
+
 type Issue {
   comments: [Comment]
   createdAt: DateTime!
@@ -36,13 +42,14 @@ type Issue {
 type Mutation {
   createComment(content: String!, issueId: String!): Comment!
   createIssue(description: String!, projectId: String!, projectSlug: String!, severity: String!, title: String!): Issue!
-  createProject(description: String!, email: String!, name: String!, url: String!): Project!
+  createProject(description: String!, email: String!, image: String!, name: String!, url: String!): Project!
   deleteComment(commentId: String!): Comment!
   editComment(commentData: String!, commentId: String!): Comment!
   logOut: User!
   login(password: String!, username: String!): User!
   signUp(email: String!, password: String!, username: String!): User!
   updateVote(issueId: String!): Issue!
+  uploadImage(name: String!, type: String!): File!
 }
 
 type Project {

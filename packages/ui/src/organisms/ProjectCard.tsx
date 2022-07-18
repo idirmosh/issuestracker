@@ -16,6 +16,7 @@ function ProjectCard({ project }: { project: Project }) {
             <ProjectCardHeader
               name={project.name}
               url={project.url}
+              image={project.image}
               description={project.description}
             />
             <ProjectCardBarChart

@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import InputField from "../molecules/InputField";
 import ModalNote from "../molecules/ModalNote";
-import { CREATE_PROJECT } from "shared/server/graphql/queries";
+import { CREATE_PROJECT, UPLOAD_IMAGE } from "shared/server/graphql/queries";
 import { useRouter } from "next/router";
 import React, { ReactElement, useState } from "react";
 import { ModalProps } from "./CreateIssueModal";
@@ -39,10 +39,46 @@ interface ModalState {
   description?: string;
 }
 
+function useUploadImage() {
+  const [imageURL, setImageURL] = useState("");
+  const [blobImage, setBlobImage] = useState("");
+
+  const [uploadImage, data] = useMutation(UPLOAD_IMAGE);
+
+  const presignedUpload = async (url: string, file: any) => {
+    const options = { method: "PUT", body: file };
+    const response = await fetch(url, options);
+    const imageURL = response.url.split("?")[0];
+    return imageURL;
+  };
+
+  const onImageChange = (e: any) => {
+    const file = e.target.files[0];
+    const blob = URL.createObjectURL(file);
+
+    setBlobImage(blob);
+
+    uploadImage({
+      variables: { name: file?.name, type: file?.type },
+      async onCompleted({ uploadImage: { url } }) {
+        const imageURL = await presignedUpload(url, file);
+        setImageURL(imageURL);
+      },
+      onError(error) {
+        console.log(error);
+      },
+    });
+  };
+
+  return { blobImage, imageURL, onImageChange };
+}
+
 function CreateProjectModal({ projectId, handler }: ModalProps): ReactElement {
+  const router = useRouter();
+
   const [form, setForm] = useState<ModalState>({});
 
-  const router = useRouter();
+  const { blobImage, imageURL, onImageChange } = useUploadImage();
   const [submitIssue, { data, loading, error }] = useMutation(CREATE_PROJECT);
 
   const handleChange = (e: React.ChangeEvent<Record<string, string>>): void =>
@@ -60,6 +96,7 @@ function CreateProjectModal({ projectId, handler }: ModalProps): ReactElement {
         url: form.url,
         email: form.email,
         description: form.description,
+        image: imageURL,
       },
       onCompleted() {
         router.reload();
@@ -69,6 +106,11 @@ function CreateProjectModal({ projectId, handler }: ModalProps): ReactElement {
       },
     });
   };
+
+  console.log(imageURL);
+  // const selectFile = (e: any) => {
+  //   useUploadImage(e);
+  // };
   //tes
   return (
     <Modal
@@ -92,6 +134,32 @@ function CreateProjectModal({ projectId, handler }: ModalProps): ReactElement {
         value={form.name}
         handler={handleChange}
       />
+
+      <div className="my-8">
+        <label
+          className="mb-3 block text-sm font-medium text-gray-700"
+          htmlFor="uploadImage"
+        >
+          Upload project image
+        </label>
+        <form className="flex items-center space-x-6" id="uploadImage">
+          <div className="shrink-0">
+            <img
+              className="h-12 w-12 rounded-full object-cover"
+              src={blobImage}
+            />
+          </div>
+          <label className="block">
+            <span className="sr-only">Choose File</span>
+            <input
+              onChange={onImageChange}
+              type="file"
+              className="hover:file:indigo-indigo-200 block w-full cursor-pointer text-sm text-gray-500 file:mr-4 file:rounded-full file:border-0 file:bg-gray-300 file:py-2 file:px-4 file:text-sm file:font-semibold file:hover:bg-gray-400"
+            />
+          </label>
+        </form>
+      </div>
+
       <InputField
         name="url"
         label="URL"

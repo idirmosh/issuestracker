@@ -10,10 +10,10 @@ function DashboardTemplate() {
   const projects = value;
   const [modal, setModal] = useState(false);
   return (
-    <div className="relative pb-5 mx-auto mt-12 border-b border-gray-200 max-w-7xl sm:pb-0">
+    <div className="relative mx-auto mt-12 max-w-7xl border-b border-gray-200 pb-5 sm:pb-0">
       {modal && <CreateProjectModal projectId="null" handler={setModal} />}
 
-      <ul className="grid grid-cols-1 gap-6 px-4 mt-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:px-0">
+      <ul className="mt-12 grid grid-cols-1 gap-6 px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:px-0">
         <CreateProjectCard setModal={setModal} />
 
         {projects &&
@@ -24,4 +24,5 @@ function DashboardTemplate() {
     </div>
   );
 }
+
 export default DashboardTemplate;

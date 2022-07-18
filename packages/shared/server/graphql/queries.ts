@@ -131,12 +131,14 @@ export const CREATE_PROJECT = gql`
     $url: String!
     $email: String!
     $description: String!
+    $image: String!
   ) {
     createProject(
       name: $name
       url: $url
       email: $email
       description: $description
+      image: $image
     ) {
       id
     }
@@ -239,6 +241,43 @@ export const EDIT_COMMENT = gql`
         id
         image
       }
+    }
+  }
+`;
+
+export const GET_LASTEST_ISSUES = gql`
+  query GetLatestIssues {
+    getLatestIssues {
+      id
+      createdAt
+      updatedAt
+      userId
+      status
+      project {
+        id
+        name
+        image
+      }
+      projectName
+      title
+      slug
+      votes
+      severity
+      comments {
+        id
+      }
+      user {
+        image
+        username
+        id
+      }
+    }
+  }
+`;
+export const UPLOAD_IMAGE = gql`
+  mutation Mutation($name: String!, $type: String!) {
+    uploadImage(name: $name, type: $type) {
+      url
     }
   }
 `;

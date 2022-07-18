@@ -1,5 +1,5 @@
 import { GRAPHQL_API_URL } from "shared/constants";
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 
 const httpLink = new HttpLink({
   uri: GRAPHQL_API_URL,
@@ -8,6 +8,7 @@ const httpLink = new HttpLink({
 
 const apolloClient = new ApolloClient({
   link: httpLink,
+  // link: uploadLink,
   cache: new InMemoryCache(),
 });
 
