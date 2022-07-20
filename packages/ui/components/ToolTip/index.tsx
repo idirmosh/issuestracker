@@ -23,7 +23,7 @@ export default function ToolTip({
   const arrowStyles = arrowDictionary[arrow];
 
   const toolTipBoxStyles =
-    "absolute bg-gray-900 text-white text-sm py-2 px-3 rounded-lg bottom-10 bg-opacity-75 w-max border border-gray-800";
+    "absolute bg-gray-900 text-white text-xs py-2 px-3 rounded-lg bottom-10 bg-opacity-75 w-max border border-gray-800";
 
   return (
     <div className="relative cursor-help">

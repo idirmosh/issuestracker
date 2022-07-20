@@ -35,3 +35,19 @@ export function formatDate(date, variant = "") {
     return dayjs(date).format("MMMM D, YYYY");
   }
 }
+
+/**
+ * Calculates the perc success rate
+ * @param {string} numerator
+ * @param {string} denominator
+ */
+export function getSuccessRate(numerator: number, denominator: number) {
+  if (numerator === 0) {
+    // avoide Infinit when dividing by 0
+    numerator = denominator;
+  } else if (denominator == 0) {
+    denominator = 0;
+  }
+  const successRate = (denominator / numerator) * 100;
+  return successRate;
+}

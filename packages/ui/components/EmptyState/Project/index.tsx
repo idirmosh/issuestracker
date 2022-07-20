@@ -1,12 +1,10 @@
-import React from "react";
-import { MdOutlineAdd } from "react-icons/md";
-import { BoxIcon } from "../../icons";
+import { BoxIcon } from "../../../icons";
 
-function CreateProjectCard({
-  setModal,
-}: {
+interface IEmptyProject {
   setModal: (arg0: boolean) => boolean;
-}) {
+}
+
+export default function EmptyProjectState({ setModal }: IEmptyProject) {
   return (
     <li
       onClick={() => setModal(true)}
@@ -22,5 +20,3 @@ function CreateProjectCard({
     </li>
   );
 }
-
-export default CreateProjectCard;

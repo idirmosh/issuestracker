@@ -1,14 +1,19 @@
 import Divider from "../atoms/Divider";
 import ProjectInfoFooter from "../molecules/ProjectInfoFooter";
 import ProjectInfoHeader from "../molecules/ProjectInfoHeader";
-import React, { useContext } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import Image from "next/image";
-import { CalendarIcon, LinkIcon, MailIcon } from "../../icons";
+import { CalendarIcon, LinkIcon, MailIcon, PlusIcon } from "../../icons";
 import { ProjectContext } from "../../context";
 import { formatDate } from "shared/libs/helpers";
 import { Issue, Project } from "shared/types";
+import { AuthContext } from "../../context/AuthContext";
+import CreateIssueModal from "./CreateIssueModal";
 
 function ProjectInfo() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { contextUser: user } = useContext(AuthContext);
   const project: Project = useContext(ProjectContext);
 
   const contributions = project.issues.reduce(
@@ -50,7 +55,26 @@ function ProjectInfo() {
               </span>
             </div>
           </div>
-          <div className="ml-auto">action</div>
+          <div className="ml-auto">
+            {user && (
+              <Fragment>
+                {isOpen && (
+                  <CreateIssueModal
+                    projectId={project.id}
+                    projectSlug={project.slug}
+                    handler={setIsOpen}
+                  />
+                )}
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="-my-2.5 ml-8 inline-flex justify-center rounded-lg bg-indigo-700 py-2.5 px-4 text-sm font-semibold text-white hover:bg-indigo-600"
+                >
+                  <PlusIcon className="mr-1 h-4 w-4" />
+                  Create issue
+                </button>
+              </Fragment>
+            )}
+          </div>
         </div>
         <div className="items-left relative mt-7 flex w-full flex-col justify-between  sm:flex-row sm:items-center">
           <div className="relative flex">

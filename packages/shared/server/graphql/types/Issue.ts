@@ -197,7 +197,7 @@ export const createIssue = extendType({
 
 export const Status = enumType({
   name: "Status",
-  members: ["OPEN", "DUBLICATE", "REVIEWING", "CLOSED"],
+  members: ["OPEN", "DUBLICATED", "REVIEWING", "FIXED"],
 });
 
 export const Severity = enumType({

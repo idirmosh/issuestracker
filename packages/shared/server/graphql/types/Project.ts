@@ -62,11 +62,17 @@ export const getDashboard = extendType({
         if (!userId) {
           throw new AuthenticationError("The server failed to authenticate");
         } else {
-          return await db.project.findMany({
-            where: {
-              userId,
-            },
-          });
+          try {
+            const userProjects = await db.project.findMany({
+              where: {
+                userId,
+              },
+            });
+
+            return userProjects;
+          } catch (error) {
+            console.log(error);
+          }
         }
       },
     });

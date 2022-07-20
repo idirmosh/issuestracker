@@ -6,6 +6,7 @@ const config = {
       "pbs.twimg.com",
       "s.gravatar.com",
       "avatars.githubusercontent.com",
+      "gql-issuetracker.s3.us-east-2.amazonaws.com",
     ],
   },
   reactStrictMode: true,
