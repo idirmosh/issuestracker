@@ -28,7 +28,7 @@ function ProjectInfo() {
         <div className="flex items-center">
           <div className="mr-6 flex items-center justify-center rounded-lg border-2 border-gray-300 p-1">
             <Image
-              src="https://avatars.githubusercontent.com/u/1086321?s=200&v=4"
+              src={project.image}
               width={100}
               height={100}
               className="rounded-md"
@@ -67,7 +67,7 @@ function ProjectInfo() {
                 )}
                 <button
                   onClick={() => setIsOpen(true)}
-                  className="-my-2.5 ml-8 inline-flex justify-center rounded-lg bg-indigo-700 py-2.5 px-4 text-sm font-semibold text-white hover:bg-indigo-600"
+                  className="-my-2.5 ml-8 flex items-center justify-center rounded-lg bg-indigo-700 py-2.5 px-4 text-sm font-semibold text-white hover:bg-indigo-600"
                 >
                   <PlusIcon className="mr-1 h-4 w-4" />
                   Create issue

@@ -33,6 +33,7 @@ export async function getStaticProps({ params }) {
     query: GET_PROJECT,
     variables: { slug: params.projectSlug },
   });
+  console.log(data.getProject);
   return {
     props: { project: data.getProject },
     revalidate: false,

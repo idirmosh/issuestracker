@@ -44,9 +44,17 @@ export const GET_PROJECT = gql`
         comments {
           id
         }
+        user {
+          username
+          image
+          email
+          id
+        }
       }
       user {
+        id
         username
+        image
       }
     }
   }

@@ -43,6 +43,8 @@ export const Issue = objectType({
     t.field("user", {
       type: User,
       async resolve(parent, _args, { db }) {
+        console.log(parent.userId);
+        if (!parent.userId) return;
         return await db.user.findFirst({
           where: {
             id: parent.userId,

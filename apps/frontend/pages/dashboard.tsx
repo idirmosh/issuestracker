@@ -6,7 +6,7 @@ import { GET_DASHBOARD } from "shared/server/graphql/queries";
 
 function DashboardPage(props: any) {
   const { loading, error, data } = useQuery(GET_DASHBOARD);
-  console.log({ loading, error, data });
+
   useUser({
     redirectTo: "/login",
     redirectIfFound: undefined,
