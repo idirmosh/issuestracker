@@ -6,7 +6,7 @@ function IssueTemplate(): ReactElement {
   return (
     <div className="min-h-screen">
       <main className="py-10">
-        <div className="grid max-w-3xl grid-cols-1 gap-6 mx-auto mt-8 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+        <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
           <IssueContent />
           <IssueSideBar />
         </div>
