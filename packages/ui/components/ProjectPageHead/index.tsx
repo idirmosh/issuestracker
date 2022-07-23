@@ -1,17 +1,13 @@
-import Divider from "../atoms/Divider";
-import ProjectInfoFooter from "../molecules/ProjectInfoFooter";
-import ProjectInfoHeader from "../molecules/ProjectInfoHeader";
-import React, { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import Image from "next/image";
 import { CalendarIcon, LinkIcon, MailIcon, PlusIcon } from "../../icons";
 import { ProjectContext } from "../../context";
 import { formatDate } from "shared/libs/helpers";
 import { Issue, Project } from "shared/types";
 import { AuthContext } from "../../context/AuthContext";
-import CreateIssueModal from "./CreateIssueModal";
+import CreateIssueModal from "../../src/organisms/CreateIssueModal";
 
-//REMOVE ALL
-function ProjectdInfo() {
+export default function ProjectPageHead() {
   const [isOpen, setIsOpen] = useState(false);
 
   const { contextUser: user } = useContext(AuthContext);
@@ -63,7 +59,7 @@ function ProjectdInfo() {
                   <CreateIssueModal
                     projectId={project.id}
                     projectSlug={project.slug}
-                    handler={setIsOpen}
+                    handler={setIsOpen as any}
                   />
                 )}
                 <button
@@ -107,4 +103,3 @@ function ProjectdInfo() {
     </header>
   );
 }
-export default ProjectInfo;

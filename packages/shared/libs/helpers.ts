@@ -42,12 +42,12 @@ export function formatDate(date, variant = "") {
  * @param {string} denominator
  */
 export function getSuccessRate(numerator: number, denominator: number) {
-  if (numerator === 0) {
-    // avoide Infinit when dividing by 0
-    numerator = denominator;
-  } else if (denominator == 0) {
-    denominator = 0;
-  }
+  // avoid Infinit when dividing by 0
+  if (numerator === 0) numerator = denominator;
+  // avoid NaN when both args are 0
+  if (numerator + denominator === 0) numerator = 1;
+  if (denominator == 0) denominator = 0;
+
   const successRate = (denominator / numerator) * 100;
   return successRate;
 }

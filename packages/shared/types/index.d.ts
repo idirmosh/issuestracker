@@ -37,6 +37,7 @@ export type Issue = {
   status: Status | string;
   title: string;
   votes: number;
+  user: User;
 };
 
 export type Comment = {

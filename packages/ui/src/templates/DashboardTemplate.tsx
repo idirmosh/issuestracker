@@ -1,10 +1,10 @@
 // @ts-nocheck
 
 import CreateProjectModal from "ui/src/organisms/CreateProjectModal";
-import ProjectCard from "ui/src/organisms/ProjectCard";
 import { DashboardContext } from "ui/context";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import EmptyProjectState from "../../components/EmptyState/Project";
+import ProjectCard from "../../components/ProjectCard";
 
 function DashboardTemplate() {
   const value = useContext(DashboardContext);

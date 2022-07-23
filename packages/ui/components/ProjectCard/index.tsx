@@ -5,7 +5,7 @@ import { FlagIcon, LightBulbIcon, SearchIcon } from "../../icons";
 import { getSuccessRate } from "shared/libs/helpers";
 import CircularBar from "../../components/Metrics/CircularBar/inex";
 
-function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({ project }: { project: Project }) {
   const issues = project.issues;
 
   const filterStatusByKey = (key: string) =>
@@ -70,5 +70,3 @@ function ProjectCard({ project }: { project: Project }) {
     </Link>
   );
 }
-
-export default ProjectCard;
