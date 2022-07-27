@@ -13,7 +13,7 @@
     "schema": "../../packages/shared/prisma/schema.prisma"
   },
   "dependencies": {
-    "next": "^12.2.2",
+    "next": "^12.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "shared": "*",
@@ -22,11 +22,11 @@
   "devDependencies": {
     "config": "*",
     "tsconfig": "*",
-    "@types/node": "^18.0.3",
+    "@types/node": "^18.6.1",
     "@types/react": "18.0.15",
-    "eslint": "8.19.0",
+    "eslint": "8.20.0",
     "next-transpile-modules": "9.0.0",
-    "prisma": "^4.0.0",
+    "prisma": "^4.1.0",
     "typescript": "^4.7.4"
   }
 }
