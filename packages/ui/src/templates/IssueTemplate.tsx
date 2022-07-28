@@ -144,18 +144,4 @@ function IssuePageContent() {
   );
 }
 
-// OLD TEMPLATE
-// function IssueTemplate(): ReactElement {
-//   return (
-//     <div classNameName="min-h-screen">
-//       <main classNameName="py-10">
-//         <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-//           <IssueContent />
-//           <IssueSideBar />
-//         </div>
-//       </main>
-//     </div>
-//   );
-// }
-
 export default IssueTemplate;

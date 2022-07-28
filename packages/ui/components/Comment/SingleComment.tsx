@@ -1,4 +1,4 @@
-import { ChatIcon } from "../../icons";
+import { ChatIcon, PencelIcon } from "../../icons";
 
 export default function SingleComment() {
   return (
@@ -37,7 +37,10 @@ export default function SingleComment() {
               </p>
             </div>
           </div>
-          <div>Edit</div>
+          <div className="flex cursor-pointer items-center rounded-md border border-gray-200 py-1 px-2 text-xs text-gray-900 hover:border-gray-400 hover:shadow">
+            <PencelIcon className="mr-1 h-3 w-3 fill-gray-600" />
+            Edit
+          </div>
         </div>
       </div>
     </li>
