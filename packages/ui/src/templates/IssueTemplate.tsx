@@ -1,19 +1,37 @@
 //import IssueContent from "ui/src/organisms/IssueContent";
 import IssueSideBar from "ui/src/organisms/IssueSideBar";
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, {
+  ReactElement,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Badge from "../../components/Badge";
 import SeverityBadge from "../../components/SeverityBadge";
 import CommentList from "../../components/Comment/CommentList";
 import { CheckIcon, ChevronDownIcon, CircleIcon, InfoIcon } from "../../icons";
 import DoubleChoiceRadioGroup from "../../components/DoubleChoiceRadioGroup";
+import { IssueContext } from "../../context";
+import {
+  CommentsContext,
+  CommentsContextProvider,
+} from "../../context/CommentsContext";
+import apolloClient from "shared/apollo";
+import { CREATE_COMMENT, GET_COMMENTS } from "shared/server/graphql/queries";
+import { useMutation } from "@apollo/client";
 
 function IssueTemplate(): ReactElement {
+  const { comments: contextComments } = useContext(IssueContext);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="py-10">
         <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-          <IssuePageContent />
-          <IssuePageSidebar />
+          <CommentsContextProvider value={contextComments}>
+            <IssuePageContent />
+            <IssuePageSidebar />
+          </CommentsContextProvider>
         </div>
       </main>
     </div>
@@ -26,10 +44,33 @@ function IssuePageSidebar() {
     hasComment: true,
     comment: "",
   });
+  const issueRef = useContext(IssueContext) as any;
+  const { comments, setComments } = useContext(CommentsContext);
+  const [addComment, { data, loading, error }] = useMutation(CREATE_COMMENT);
 
-  function submitVote() {
-    console.log(state);
-  }
+  const submitComment = async (newComment: any) => {
+    await addComment({
+      variables: { issueId: issueRef.id, content: newComment },
+      onCompleted(data) {
+        setComments((prevState: any) => {
+          return [...prevState, data?.createComment];
+        });
+      },
+    });
+
+    // if (data) {
+    //   setComments((prevState: any) => {
+    //     console.log({ prevState });
+    //     return [...prevState, data.createComment];
+    //   });
+    // }
+  };
+
+  const submitVote = () => {
+    submitComment(state.comment);
+
+    // console.log(data);
+  };
   return (
     <section className="lg:col-span-1 lg:col-start-3">
       <div className="border border-gray-300 bg-white shadow-sm sm:rounded-lg">
@@ -137,6 +178,7 @@ function IssuePageContent() {
         {/* activity */}
         <div className="border-t border-gray-200 p-6">
           <h6 className="mb-10 text-lg text-gray-900">Acitivity</h6>
+
           <CommentList />
         </div>
       </div>

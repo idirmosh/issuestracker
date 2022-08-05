@@ -15,8 +15,19 @@ export const IS_PROD = process.env.NODE_ENV === "production";
 
 export const IS_DEV = process.env.NODE_ENV !== "production";
 
+// dev only
+
+const frontEndUrlSwitch = (key?: string) => {
+  switch (key) {
+    case "apollo":
+      return "https://studio.apollographql.com";
+    default:
+      return "http://localhost:3000";
+  }
+};
+
 export const FRONTEND_URL = IS_DEV
-  ? "http://localhost:3000"
+  ? frontEndUrlSwitch("apollooo")
   : "https://issuestracker.vercel.app";
 
 export const GRAPHQL_API_URL = IS_DEV

@@ -1,46 +1,99 @@
-import { ChatIcon, PencelIcon } from "../../icons";
+import Image from "next/image";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { formatDate } from "shared/libs/helpers";
+import { Comment } from "shared/types";
+import { AuthContext } from "../../context/AuthContext";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+import { ChatIcon, CheckIcon, PencelIcon } from "../../icons";
 
-export default function SingleComment() {
+interface ISCProps {
+  comment: Comment;
+  contextUserId: string;
+}
+
+export default function SingleComment({ comment, contextUserId }: ISCProps) {
+  const singleCommentRef = useRef<HTMLInputElement>(null);
+  const canEdit: boolean = contextUserId === comment?.user?.id;
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [commentText, setCommentText] = useState<string>(comment?.content);
+
+  const onEdit = () => {
+    setEditMode(true);
+  };
+
+  useOnClickOutside(singleCommentRef, () => setEditMode(false));
+
+  const test = comment?.content;
+
   return (
     <li>
-      <div className="relative pb-8">
+      <div className="relative mb-9">
         <span
-          className="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200"
+          className="absolute top-12 left-5 -ml-px h-full w-0.5 bg-gray-200 pb-4"
           aria-hidden="true"
         ></span>
-        <div className="relative flex items-start space-x-3">
+        <div
+          ref={singleCommentRef}
+          className="relative flex  items-start space-x-3"
+        >
           <div className="relative">
-            <img
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
-              src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-              alt=""
+            <Image
+              width={40}
+              height={40}
+              className="block items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
+              src={comment?.user?.image}
+              alt={comment?.user?.username}
             />
 
             <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-around rounded-full bg-indigo-600 px-0.5 py-px">
               <ChatIcon className="h-4 w-4 fill-white" />
             </span>
           </div>
-          <div className="min-w-0 flex-1">
-            <div>
-              <div className="text-sm">
-                <a href="#" className="font-medium text-gray-900">
-                  idirmosh
-                </a>
+          {!editMode ? (
+            <div className="min-w-0 flex-1">
+              <div>
+                <div className="flex items-center text-sm">
+                  <a href="#" className="font-medium text-gray-900">
+                    {comment?.user?.username}
+                  </a>
+                  <p className="mt-0.5 ml-1 text-xs text-gray-500">
+                    Commented {formatDate(comment?.createdAt, "before")}
+                  </p>
+                </div>
               </div>
-              <p className="mt-0.5 text-xs text-gray-500">Commented 6d ago</p>
+              <div className="mt-2 text-sm text-gray-700">
+                <p>{commentText}</p>
+              </div>
             </div>
-            <div className="mt-2 text-sm text-gray-700">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Tincidunt nunc ipsum tempor purus vitae id. Morbi in vestibulum
-                nec varius. Et diam cursus quis sed purus nam.
-              </p>
+          ) : (
+            <div className="w-full">
+              <textarea
+                autoFocus={true}
+                value={commentText}
+                onChange={(e: any) => setCommentText(e.target.value)}
+                className="border-px ml-1 block w-full resize-none rounded-lg border-gray-300 p-2.5 text-sm text-gray-900 focus:border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-300"
+              />
             </div>
-          </div>
-          <div className="flex cursor-pointer items-center rounded-md border border-gray-200 py-1 px-2 text-xs text-gray-900 hover:border-gray-400 hover:shadow">
-            <PencelIcon className="mr-1 h-3 w-3 fill-gray-600" />
-            Edit
-          </div>
+          )}
+
+          {canEdit && (
+            <div
+              onClick={onEdit}
+              className="flex cursor-pointer items-center rounded-md border border-gray-200 py-1 px-2 text-xs text-gray-900 hover:border-gray-400 hover:shadow"
+            >
+              {editMode ? (
+                <Fragment>
+                  <CheckIcon className="mr-1 h-3 w-3 fill-gray-600" />
+                  Save
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <PencelIcon className="mr-1 h-3 w-3 fill-gray-600" />
+                  Edit
+                </Fragment>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </li>

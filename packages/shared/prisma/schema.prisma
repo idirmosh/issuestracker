@@ -33,7 +33,6 @@ model Project {
   description String
   user        User?    @relation(fields: [userId], references: [id])
   issues      Issue[]
-
   @@index([userId])
 }
 
@@ -52,7 +51,6 @@ model Issue {
   project     Project?  @relation(fields: [projectId], references: [id])
   user        User?     @relation(fields: [userId], references: [id])
   comments    Comment[]
-
   @@index([projectId])
 }
 
@@ -64,7 +62,6 @@ model Comment {
   userId    String?
   issue     Issue?   @relation(fields: [issueId], references: [id])
   user      User?    @relation(fields: [userId], references: [id])
-
   @@index([issueId])
 }
 
@@ -74,7 +71,6 @@ model Vote {
   userId    String?
   createdAt DateTime @default(now())
   user      User?    @relation(fields: [userId], references: [id])
-
   @@index([userId, issueId])
 }
 
